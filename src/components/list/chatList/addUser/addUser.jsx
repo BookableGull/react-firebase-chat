@@ -1,17 +1,23 @@
 import "./addUser.css"
 import {db} from "../../../../lib/firebase";
 import {
-    collection, query, serverTimestamp, where
+    arrayUnion,
+    collection, query, serverTimestamp, updateDoc, where
 } from "firebase/firestore";
 
 import { useState } from "react";
 import { getDocs } from "firebase/firestore";
 import { setDoc } from "firebase/firestore";
 import { doc } from "firebase/firestore";
+import { useUserStore } from "../../../../lib/userStore";
+import { update } from "firebase/database";
+
 
 
 const AddUser = () => {
     const [user,setUser] = useState(null)
+
+    const {currentUser} = useUserStore()
 
     const handleSearch = async e=>{
         e.preventDefault()
@@ -44,8 +50,16 @@ const AddUser = () => {
                 createdAt: serverTimestamp(),
                 messages:[],
             })
+            
+            await updateDoc(doc(userChatsRef, currentUser.id), {
+                chats:arrayUnion({
+                    chatID: newChatRef.id,
+                    lastMessage:"",
+                    receiverId: user.id,
+                    updatedAt: Date.now(),
+                })
+            })
 
-            console.log(newChatRef.id)
         } catch(err){
             console.log(err);
         }
@@ -61,7 +75,7 @@ const AddUser = () => {
                     <img src={user.avatar || "./avatar.png"} alt=""/>
                     <span>{user.username}</span>
                 </div>
-                <button onClick={handleAdd}>Add User</button>
+                <button onClick={handleAdd} disabled={!user}>Add User</button>
             </div>}
             </div>
     )

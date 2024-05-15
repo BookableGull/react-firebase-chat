@@ -7,11 +7,11 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: "reactchat-e4da9.firebaseapp.com",
-  projectId: "reactchat-e4da9",
-  storageBucket: "reactchat-e4da9.appspot.com",
-  messagingSenderId: "875725126162",
-  appId: "1:875725126162:web:a67a04fd5bd3dddcef76cb"
+  authDomain: "reactchat-77eed.firebaseapp.com",
+  projectId: "reactchat-77eed",
+  storageBucket: "reactchat-77eed.appspot.com",
+  messagingSenderId: "584108722537",
+  appId: "1:584108722537:web:725fc46eb76b9ddd4515f8"
 };
 
 // Initialize Firebase
@@ -21,6 +21,7 @@ const db = getFirestore(app); // Call getFirestore to initialize the Firestore o
 const storage = getStorage(app); // Call getStorage to initialize the Storage object
 
 export { auth, db, storage };
+
 
 
 
